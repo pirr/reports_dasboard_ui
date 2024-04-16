@@ -15,9 +15,9 @@
       <!-- Pipeline Creation -->
       <div>
         <h2>Create Pipeline</h2>
-        <select v-model="selectedTemplate">
-          <option v-for="(template, index) in sqlTemplates" :key="index" :value="template">{{ template.name }}</option>
-        </select>
+        <div ref="templateManagerContainer">
+          <template-manager />
+        </div>
         <button @click="addToPipeline">Add to Pipeline</button>
       </div>
   
@@ -59,8 +59,12 @@
   
   import { ref, defineComponent } from 'vue';
   import type { Header, Item } from 'vue3-easy-data-table';
+  import TemplateManager from './TemplateManager.vue';
   
   export default defineComponent({
+    components: {
+      TemplateManager,
+    },
     
     setup() {
       const sqlTemplates = ref([
