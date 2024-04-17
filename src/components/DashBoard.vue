@@ -2,35 +2,17 @@
     <div>
       <!-- SQL Templates Management -->
       <div>
-        <h2>SQL Templates Management</h2>
-        <div v-for="(template, index) in sqlTemplates" :key="index">
-          <p>Name: {{ template.name }}</p>
-          <p>Query: {{ template.query }}</p>
-          <p>Filters: {{ template.filters.join(', ') }}</p>
-          <p>Joins: {{ template.joins.join(', ') }}</p>
-          <!-- Additional fields and actions for managing templates -->
-        </div>
+        <template-manager ref="templateManager" :templates="sqlTemplates" :templateAction="addToPipeline"/>
       </div>
   
       <!-- Pipeline Creation -->
       <div>
         <h2>Create Pipeline</h2>
-        <div ref="templateManagerContainer">
-          <template-manager />
-        </div>
-        <button @click="addToPipeline">Add to Pipeline</button>
       </div>
   
       <!-- Pipeline Preview -->
-      <div v-if="pipeline.length > 0">
-        <h2>Pipeline Preview</h2>
-        <div v-for="(step, index) in pipeline" :key="index">
-          <p>Name: {{ step.name }}</p>
-          <p>Query: {{ step.query }}</p>
-          <p>Filters: {{ step.filters.join(', ') }}</p>
-          <p>Joins: {{ step.joins.join(', ') }}</p>
-          <!-- Additional fields and actions for managing pipeline -->
-        </div>
+      <div v-if="pipelineManagerContainer.length > 0">
+        <pipeline-manager ref="pipelineManager" :pipelineTemplates="pipelineManagerContainer"/>
       </div>
   
       <!-- Filter Creation -->
@@ -60,10 +42,18 @@
   import { ref, defineComponent } from 'vue';
   import type { Header, Item } from 'vue3-easy-data-table';
   import TemplateManager from './TemplateManager.vue';
+  import PipelineManager from './PipelineManager.vue';
+  import { Template } from './types';
   
   export default defineComponent({
     components: {
       TemplateManager,
+      PipelineManager,
+    },
+    methods: {
+      addToPipeline(template: Template) {
+        this.pipelineManagerContainer.push(template);
+      }
     },
     
     setup() {
@@ -74,24 +64,24 @@
         ]);
   
       const selectedTemplate = ref<Record<string, any>>();
-      const pipeline = ref<{name: string, query: string, filters: string[], joins: string[]}[]>([]);
+      const pipelineManagerContainer = ref<Template[]>([]);
       const reportName = ref('');
       const tableData = ref<Item[]>([]);
       const headers = ref<Header[]>([]);
   
-      const addToPipeline = async () => {
-        if (selectedTemplate.value) {
-          pipeline.value.push({
-            name: selectedTemplate.value.name,
-            query: selectedTemplate.value.query,
-            filters: selectedTemplate.value.filters,
-            joins: selectedTemplate.value.joins
-          });
+      // const addToPipeline = async () => {
+      //   if (selectedTemplate.value) {
+      //     pipeline.value.push({
+      //       name: selectedTemplate.value.name,
+      //       query: selectedTemplate.value.query,
+      //       filters: selectedTemplate.value.filters,
+      //       joins: selectedTemplate.value.joins
+      //     });
           
-          tableData.value = await fetchData();
-          headers.value = Object.keys(tableData.value[0]).map((key) => ({ text: key, value: key }));
-        }
-      }
+      //     tableData.value = await fetchData();
+      //     headers.value = Object.keys(tableData.value[0]).map((key) => ({ text: key, value: key }));
+      //   }
+      // }
       
       const fetchData = async (): Promise<Array<Record<string, any>>> => {
         return [
@@ -113,11 +103,10 @@
         tableData,
         saveReport,
         applyFilter,
-        addToPipeline,
         fetchData,
         sqlTemplates,
         selectedTemplate,
-        pipeline,
+        pipelineManagerContainer,
         reportName,
         headers,
       };
