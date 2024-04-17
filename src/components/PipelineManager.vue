@@ -4,7 +4,7 @@
       <div v-if="pipelineTemplates.length > 0">
         <h2>Pipeline Preview</h2>
         <div v-for="(step, index) in pipelineTemplates" :key="index">
-          <button @click="piplineElementAction(step)">Add to Pipeline</button>
+          <button @click="piplineElementAction(step)">{{ piplineElementActionButtonName }}</button>
           <p>Name: {{ step.name }}</p>
           <p>Query: {{ step.query }}</p>
           <p>Filters: {{ step.filters.join(', ') }}</p>
@@ -31,6 +31,10 @@
         type: Function,
         default: () => {},
       },
+      piplineElementActionButtonName: {
+        type: String,
+        default: 'Delete',
+      }
     },  
   
   });

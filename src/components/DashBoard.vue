@@ -11,8 +11,8 @@
       </div>
   
       <!-- Pipeline Preview -->
-      <div v-if="pipelineManagerContainer.length > 0">
-        <pipeline-manager ref="pipelineManager" :pipelineTemplates="pipelineManagerContainer"/>
+      <div>
+        <pipeline-manager ref="pipelineManager" :pipelineTemplates="pipelineManagerContainer" :piplineElementAction="deleteFromPipeline" :piplineElementActionButtonName="'Delete'"/>
       </div>
   
       <!-- Filter Creation -->
@@ -53,6 +53,9 @@
     methods: {
       addToPipeline(template: Template) {
         this.pipelineManagerContainer.push(template);
+      },
+      deleteFromPipeline(template: Template) {
+        this.pipelineManagerContainer.splice(this.pipelineManagerContainer.indexOf(template), 1);
       }
     },
     
