@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div v-for="(template, index) in templates" :key="index">
-      <table>
-        <tr>
-          <td><button @click="deleteTemplate(template)">Delete</button></td>
-          <td><template-view :template="template"/></td>
-        </tr>
-      </table>
-    </div>
+    <table>
+      <tr>
+        <td v-for="(template, index) in templates" :key="index">
+            <button @click="deleteTemplate(template)">Delete</button>
+            <template-view :template="template"/>
+        </td>
+      </tr>
+    </table>
   </div>
 </template>
   
