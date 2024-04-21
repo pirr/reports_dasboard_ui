@@ -1,9 +1,13 @@
 <template>
   <div>
+    <span>Checked names: {{ onMergeTemplates }}</span>
+
     <table>
       <tr>
         <td v-for="(template, index) in templates" :key="index">
             <button @click="deleteTemplate(template)">Delete</button>
+            <input type="checkbox" :id="index.toString()" v-model="onMergeTemplates" :value="template"/>
+            <label :for="index.toString()">To Merge</label>
             <template-view :template="template"/>
         </td>
       </tr>
@@ -33,9 +37,11 @@ export default defineComponent({
 
   setup() {
     const templates = ref(state.templates);
+    const onMergeTemplates = ref([] as Template[])
 
     return {
       templates,
+      onMergeTemplates,
     }
   }
 });

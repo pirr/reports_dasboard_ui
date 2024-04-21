@@ -32,20 +32,24 @@ export default defineComponent({
     }
   },
 
-  setup() {
+  async setup() {
     const templates = ref(state.templates);
 
     const sqlTemplates = [
-      { name: 'Template 1', query: 'SELECT * FROM table1', filters: ['status = active'], joins: ['INNER JOIN table2 ON table1.id = table2.id'] },
-      { name: 'Template 2', query: 'SELECT * FROM table2', filters: ['date > 2022-01-01'], joins: [] },
-      { name: 'Template 3', query: 'SELECT * FROM table3', filters: [], joins: [] }
+      { id: 1, name: 'Template 1', query: 'SELECT * FROM table1', filters: ['status = active'], joins: ['INNER JOIN table2 ON table1.id = table2.id'], columns: ['column1', 'column2'] },
+      { id: 2, name: 'Template 2', query: 'SELECT * FROM table2', filters: ['date > 2022-01-01'], joins: [], columns: ['column1', 'column2'] },
+      { id: 3, name: 'Template 3', query: 'SELECT * FROM table3', filters: [], joins: [], columns: ['column1', 'column2'] }
     ];
 
-    onMounted(() => {
-      for (const template of sqlTemplates) {
-        mutations.addTemplate(template);
-      }
+    onMounted(async () => {
+      getTemplates();
     });
+
+    async function getTemplates() {
+      for (const template of sqlTemplates) {
+        mutations.addTemplate(template as Template);
+      }
+    }
 
     return {
       templates,

@@ -1,9 +1,11 @@
 <template>
   <div>
     <!-- SQL Templates Management -->
-    <div>
-      <template-manager ref="templateManager"/>
-    </div>
+    <suspense timeout="0">
+      <div>
+        <template-manager ref="templateManager"/>
+      </div>
+    </suspense>
 
     <!-- Pipeline Creation -->
     <div>

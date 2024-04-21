@@ -4,6 +4,7 @@
       <p>Query: {{ template.query }}</p>
       <p>Filters: {{ template.filters.join(', ') }}</p>
       <p>Joins: {{ template.joins.join(', ') }}</p>
+      <p>Columns: {{ template.columns.join(', ') }}</p>
     </div>
 </template>
   
