@@ -36,9 +36,30 @@ export default defineComponent({
     const templates = ref(state.templates);
 
     const sqlTemplates = [
-      { id: 1, name: 'Template 1', query: 'SELECT * FROM table1', filters: ['status = active'], joins: ['INNER JOIN table2 ON table1.id = table2.id'], columns: ['column1', 'column2'] },
-      { id: 2, name: 'Template 2', query: 'SELECT * FROM table2', filters: ['date > 2022-01-01'], joins: [], columns: ['column1', 'column2'] },
-      { id: 3, name: 'Template 3', query: 'SELECT * FROM table3', filters: [], joins: [], columns: ['column1', 'column2'] }
+      { 
+        id: 1, 
+        name: 'Template 1', 
+        query: 'SELECT * FROM table1', 
+        filters: ['status = active'], 
+        joins: ['INNER JOIN table2 ON table1.id = table2.id'], 
+        columns: [{name: 'column1', type: 'string'}, {name: 'column2', type: 'numeric'}],
+      },
+      { 
+        id: 2, 
+        name: 'Template 2', 
+        query: 'SELECT * FROM table2', 
+        filters: ['date > 2022-01-01'], 
+        joins: [], 
+        columns: [{name: 'column1', type: 'string'}, {name: 'column2', type: 'numeric'}],
+      },
+      { 
+        id: 3, 
+        name: 'Template 3',
+        query: 'SELECT * FROM table3', 
+        filters: [], 
+        joins: [], 
+        columns: [{name: 'column1', type: 'string'}, {name: 'column2', type: 'numeric'}],
+      },
     ];
 
     onMounted(async () => {

@@ -1,3 +1,3 @@
-import TemplateView from './TemplateView.vue';
+import TemplatePipelineView from './TemplatePipelineView.vue';
 
-export default TemplateView;
+export default TemplatePipelineView;

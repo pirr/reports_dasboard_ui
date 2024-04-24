@@ -1,12 +1,13 @@
 <template>
     <div>
-        <template-view :template="template"/>
+        <template-view :columns="columns"/>
         <table>
-            <tr v-for="(column, index) in template.columns" :key="index">
+            <tr v-for="(column, index) in columns" :key="index">
+                <input type="checkbox" :id="index.toString()" v-model="template.columns" :value="column"/>
                 <column-view :column="column"/>
                 <td>{{ column }}</td>
                 <td><input type="text" :defaultValue="column"/></td>
-                <td><button @click="addColumnToPipeline">Add Column to Pipeline</button></td>
+                <td><button @click="addColumnToPipeline(column)">Add Column to Pipeline</button></td>
             </tr>
         </table>
     </div>
@@ -14,10 +15,9 @@
 
 <script lang="ts">
 
-import { defineComponent } from 'vue';
+import { ref, defineComponent } from 'vue';
 import TemplateView from './components/template_view/TemplateView.vue';
-import { state, mutations } from '@/stores/PipelineManager/state';
-import { Template } from '@/components/types';
+import { mutations } from '@/stores/ColumnManager/state';
 import { Column } from '@/components/types';
 
 export default defineComponent({
@@ -28,10 +28,17 @@ export default defineComponent({
   },
 
   props: {
-    template: {
-      type: Object as () => Template,
+    columns: {
+      type: Object as () => Column[],
       required: true,
     },
   },
+
+  methods: {
+    addColumnToPipeline(column: Column) {
+      mutations.addColumn(column);
+    },
+  },
+
 });
 </script>

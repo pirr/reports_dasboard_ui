@@ -1,9 +1,9 @@
-import { Column } from '@/components/types';
+import { Column, ColumnOperations, Operation } from '@/components/types';
 import { reactive } from 'vue';
 
 export const state = reactive({
   columns: [] as Column[],
-  
+  columnsOperations: [] as ColumnOperations[],
 })
 
 export const mutations = {  
@@ -15,8 +15,8 @@ export const mutations = {
     state.columns.splice(state.columns.indexOf(column), 1);
   },
 
-  divOn: <Type>(column: Column, other: Type) => {
-    return column === other
+  addColumnOperation: <Type>(column: Column, operations: Operation[]) => {
+    state.columnsOperations.push({column, operations}); 
   }
 
 }

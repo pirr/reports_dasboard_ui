@@ -2,8 +2,9 @@
     <div>
         <table>
             <tr>
-                <td>{{ column }}</td>
-                <td><input type="text" :defaultValue="column"/></td>
+                <td>{{ column.name }}</td>
+                <td>{{ column.type }}</td>
+                <td>{{ column.alias }}</td>
             </tr>
         </table>
     </div>
@@ -13,13 +14,14 @@
 <script lang="ts">
 
 import { defineComponent } from 'vue';
+import { Column } from '@/components/types';
 
 export default defineComponent({
   name: 'ColumnView',
 
   props: {
     column: {
-      type: String,
+      type: Object as () => Column,
       required: true,
     },
   },

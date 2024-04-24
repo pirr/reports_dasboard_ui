@@ -8,7 +8,7 @@
             <button @click="deleteTemplate(template)">Delete</button>
             <input type="checkbox" :id="index.toString()" v-model="onMergeTemplates" :value="template"/>
             <label :for="index.toString()">To Merge</label>
-            <template-view :template="template"/>
+            <template-pipeline-view :template="template"/>
         </td>
       </tr>
     </table>
@@ -18,7 +18,7 @@
 <script lang="ts">
 
 import { ref, defineComponent } from 'vue';
-import TemplateView from './components/template_view/TemplateView.vue';
+import TemplatePipelineView from './components/template_view/TemplatePipelineView.vue';
 import { state, mutations } from '@/stores/PipelineManager/state';
 import { Template } from '@/components/types';
 
@@ -26,7 +26,7 @@ export default defineComponent({
   name: 'PipelineManager',
   
   components: {
-    TemplateView,
+    TemplatePipelineView,
   },
 
   methods: {
